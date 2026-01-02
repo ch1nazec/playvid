@@ -1,0 +1,20 @@
+###
+POST http://127.0.0.1:8000/api/token/
+Content-Type: application/json
+
+{
+    "username": "Nikita",
+    "password": "password228."
+}
+
+###
+POST http://127.0.0.1:8000/api/token/refresh/
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NzQxNzk5MiwiaWF0IjoxNzY3MzMxNTkyLCJqdGkiOiI0ZTQ1NmM1YmM4YzM0NTE1YWJlZmIwMTJiYTVkZGE4ZSIsInVzZXJfaWQiOiIzIn0.7KZ_xUwt0npeR71h1K33Z7eyFtBPNtBNApY-xPImYwY"
+}
+
+###
+GET http://127.0.0.1:8000/users/channel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3MzMyODg1LCJpYXQiOjE3NjczMzE5ODUsImp0aSI6Ijc1NmNjMGQxZDE1MDQ0YzY4NjI1MTA2ZjkxNWM1N2YyIiwidXNlcl9pZCI6IjMifQ.HoMYxzlcvNzQuMg48GhJk8FllpZ04GrOYai4304F_GA
