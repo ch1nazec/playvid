@@ -44,7 +44,4 @@ class UsersAPITestCase(APITestCase):
     
     def test_update_channel_with_auth_own_user(self):
         response = self.user_own.patch(self.channel_url, data=self.update_data, content_type='application/json')
-        if response.status_code != 200:
-            print("Ошибка:", response.data)  # Увидишь детали ошибки
-        
         self.assertEqual(response.status_code, status.HTTP_200_OK)

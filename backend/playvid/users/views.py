@@ -49,10 +49,10 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
         Check on the users can all,
         since change data should only owner.
         """
-        self.permission_classes = [AllowAny, IsOwnerOrStaff]
+        self.permission_classes = [AllowAny]
         
         if self.request.method in {'POST', 'PUT', 'DELETE', 'PATCH'}:
-            self.permission_classes = [IsAuthenticated]
+            self.permission_classes = [IsAuthenticated, IsOwnerOrStaff]
         return super().get_permissions()
     
     
@@ -88,5 +88,5 @@ class ChannelView(generics.RetrieveUpdateDestroyAPIView):
         self.permission_classes = [AllowAny]
         
         if self.request.method in {'POST', 'PUT', 'DELETE', 'PATCH'}:
-            self.permission_classes = [IsAuthenticated]
+            self.permission_classes = [IsAuthenticated, IsOwnerOrStaff]
         return super().get_permissions()
