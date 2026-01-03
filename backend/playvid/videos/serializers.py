@@ -3,4 +3,5 @@ from users.models import CustomUser, Channel
 from .models import Videos, Comment, Tag
 
 
-class VideosSerializer
+class VideosSerializer:
+    ...
