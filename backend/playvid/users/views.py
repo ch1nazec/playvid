@@ -8,18 +8,26 @@ from rest_framework import status
 
 
 # Create your views here.
-def check_auth(request, instance):
-        """
-        Check auth and check which user to join in site.
-        If user will be try change other user then get error
-        In this function return bool type.
-        """
-        if ((not request.user and request.user.is_authenticated)
-            or (request.user and request.user.is_staff)):
+class IsOwnerOrStaff(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if not request.user.is_authenticated:
             return False
-        if not instance == request.user or request.user.is_staff:
-            return False
-        return True
+        
+        if request.user.is_staff:
+            return True
+        
+        if isinstance(obj, CustomUser):
+            return obj.id == request.user.id
+        
+        if isinstance(obj, Channel):
+            return obj.user_id.id == request.user.id
+        
+        if hasattr(obj, 'user'):
+            return obj.user.id == request.user.id
+        if hasattr(obj, 'owner'):
+            return obj.owner.id == request.user.id
+        
+        return False
 
 
 class UsersListView(generics.ListAPIView):
@@ -41,7 +49,7 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
         Check on the users can all,
         since change data should only owner.
         """
-        self.permission_classes = [AllowAny]
+        self.permission_classes = [AllowAny, IsOwnerOrStaff]
         
         if self.request.method in {'POST', 'PUT', 'DELETE', 'PATCH'}:
             self.permission_classes = [IsAuthenticated]
@@ -58,26 +66,6 @@ class UserView(generics.RetrieveUpdateDestroyAPIView):
         serializer_data = UserSerializer(instance)
         
         return Response(serializer_data.data)
-    
-    
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if not check_auth(request, instance):
-            return Response({
-                    'detail': 'You do not have permission to perform this action.'
-                }, status=status.HTTP_403_FORBIDDEN)
-            
-        return super().delete(request, *args, **kwargs)
-    
-    
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if not check_auth(request, instance):
-            return Response({
-                    'detail': 'You do not have permission to perform this action.'
-                }, status=status.HTTP_403_FORBIDDEN)
-        
-        return super().update(request, *args, **kwargs)
 
 
 class ChannelListView(generics.ListAPIView):
@@ -102,23 +90,3 @@ class ChannelView(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in {'POST', 'PUT', 'DELETE', 'PATCH'}:
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
-
-
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        
-        if not check_auth(request, instance):
-            return Response({
-                    'detail': 'You do not have permission to perform this action.'
-                }, status=status.HTTP_403_FORBIDDEN)
-        return super().delete(request, *args, **kwargs)
-    
-    
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if not check_auth(request, instance):
-            return Response({
-                    'detail': 'You do not have permission to perform this action.'
-                }, status=status.HTTP_403_FORBIDDEN)
-        
-        return super().update(request, *args, **kwargs)
