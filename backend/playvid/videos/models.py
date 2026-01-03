@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from users.models import Channel, CustomUser
+from users.models import Channel
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 # Create your models here.
@@ -19,12 +20,27 @@ class Videos(models.Model):
     tag_list = models.ManyToManyField(Tag, related_name='tags', blank=True)
 
 
-class Comment(models.Model):
-    video = models.ForeignKey(Videos, related_name='video_comment', on_delete=models.CASCADE)
-    users = models.ForeignKey(CustomUser, related_name='users_comment', on_delete=models.CASCADE)
+class Comment(MPTTModel):
+    video = models.ForeignKey(Videos, related_name='comments', on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, blank=True, related_name='children', db_index=True)
     
     text = models.TextField(max_length=1000)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    is_hidden = models.BooleanField(default=False)
     
-    like_score = models.PositiveIntegerField(default=0)
-    dislike_score = models.PositiveIntegerField(default=0)
+    class MPTTMeta:
+        order_insertion_by = ['created_at']
+        
+    class Meta:
+        indexes = [
+            models.Index(fields=['video', 'created_at',]),
+            models.Index(fields=['video', 'parent',]),
+        ]
+        ordering = ['-created_at']
+    
+    @property
+    def reply_count(self):
+        return self.children.count()
+    
+    def __str__(self):
+        return f"{self.channel.channel_name}'s comment"

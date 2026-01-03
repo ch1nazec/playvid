@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 OTHER_APPS = [
     'rest_framework',
     'phonenumber_field',
+    'mptt',
 ]
 
 LOCAL_APPS = [
@@ -48,6 +49,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + OTHER_APPS
