@@ -3,7 +3,7 @@ POST http://127.0.0.1:8000/api/token/
 Content-Type: application/json
 
 {
-    "username": "Nikita",
+    "username": "Lord_Huebes",
     "password": "password228."
 }
 
@@ -12,9 +12,13 @@ POST http://127.0.0.1:8000/api/token/refresh/
 Content-Type: application/json
 
 {
-    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NzQxNzk5MiwiaWF0IjoxNzY3MzMxNTkyLCJqdGkiOiI0ZTQ1NmM1YmM4YzM0NTE1YWJlZmIwMTJiYTVkZGE4ZSIsInVzZXJfaWQiOiIzIn0.7KZ_xUwt0npeR71h1K33Z7eyFtBPNtBNApY-xPImYwY"
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NzQ1MDUyMSwiaWF0IjoxNzY3MzY0MTIxLCJqdGkiOiI3NjkzMGQzMWU3ZTM0MTE1ODlmYzJjYWFkNTE4MjRiNyIsInVzZXJfaWQiOiI1In0.ghYiPVQPjd5WpzUXs2x_LuVx2ece10uUn7453_60Cik"
 }
 
 ###
 GET http://127.0.0.1:8000/users/channel
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3MzMyODg1LCJpYXQiOjE3NjczMzE5ODUsImp0aSI6Ijc1NmNjMGQxZDE1MDQ0YzY4NjI1MTA2ZjkxNWM1N2YyIiwidXNlcl9pZCI6IjMifQ.HoMYxzlcvNzQuMg48GhJk8FllpZ04GrOYai4304F_GA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3MzY1MDI4LCJpYXQiOjE3NjczNjQxMjgsImp0aSI6IjUxOGVkMWI4OWE1ZTQ3ZjJiMWRjOTJmODk1ZDRmMzZkIiwidXNlcl9pZCI6IjUifQ.kLsewJlNSJWeUnxuAp3kSIFrUxIT8vzZpMRk4AhMhTg
+
+###
+DELETE http://127.0.0.1:8000/users/5/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3MzY1MDI4LCJpYXQiOjE3NjczNjQxMjgsImp0aSI6IjUxOGVkMWI4OWE1ZTQ3ZjJiMWRjOTJmODk1ZDRmMzZkIiwidXNlcl9pZCI6IjUifQ.kLsewJlNSJWeUnxuAp3kSIFrUxIT8vzZpMRk4AhMhTg

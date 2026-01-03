@@ -12,7 +12,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class CustomUser(AbstractUser):
-    phone_number = PhoneNumberField(region='RU')
+    phone_number = PhoneNumberField(region='RU', blank=True)
 
 
 class Channel(models.Model):
@@ -21,12 +21,12 @@ class Channel(models.Model):
     channel_name = models.CharField(max_length=100, blank=False, unique=True)
     slug_name = models.SlugField(max_length=100, blank=False, unique=True)
     created_date = models.DateField(auto_now_add=True, editable=False)
-    description = models.TextField()
-    preview = models.ImageField(upload_to='Channels/PreviewsChannel/%Y/%m/%d/')
+    description = models.TextField(blank=True)
+    preview = models.ImageField(upload_to='Channels/PreviewsChannel/%Y/%m/%d/', blank=True)
     
     def save(self, *args, **kwargs):
         if not self.slug_name:
-            self.slug_name = slugify()
+            self.slug_name = slugify(self.channel_name)
         return super().save(*args, **kwargs)
 
 
