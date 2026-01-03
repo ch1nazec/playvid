@@ -38,6 +38,7 @@ OTHER_APPS = [
 
 LOCAL_APPS = [
     'users.apps.UsersConfig',
+    'videos.apps.VideosConfig',
 ]
 
 DJANGO_APPS = [
