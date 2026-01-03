@@ -22,7 +22,10 @@ class UsersAPITestCase(APITestCase):
         
         self.user_own = APIClient()
         self.user_own.force_authenticate(user=self.admin)
-        
+        self.update_data = {
+            'channel_name': 'Этот канал захватил Сталин',
+            'description': 'Всех расстреляем',
+        }
     
     
     def test_check_channel_without_auth(self):
@@ -31,18 +34,17 @@ class UsersAPITestCase(APITestCase):
     
     
     def test_update_channel_without_auth(self):
-        update_data = {
-            'channel_name': 'Этот канал захватил Сталин',
-            'description': 'Всех расстреляем',
-        }
-        response = self.client.put(self.channel_url, data=update_data, content_type='json')
+        response = self.client.put(self.channel_url, data=self.update_data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
     
     
     def test_update_channel_with_auth_not_own_user(self):
-        update_data = {
-            'channel_name': 'Этот канал захватил Сталин',
-            'description': 'Всех расстреляем',
-        }
-        response = self.user_not_own.put(self.channel_url, data=update_data, content_type='json')
+        response = self.user_not_own.put(self.channel_url, data=self.update_data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    
+    def test_update_channel_with_auth_own_user(self):
+        response = self.user_own.patch(self.channel_url, data=self.update_data, content_type='application/json')
+        if response.status_code != 200:
+            print("Ошибка:", response.data)  # Увидишь детали ошибки
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
